@@ -19,7 +19,7 @@ echo Nav::widget([
   ['label' => 'Inicio', 'url' => ['/site/index']],
   ['label' => 'Clientes', 'url' => ['/clientes/index']],
   ['label' => 'Produtos', 'url' => ['/produtos/index']],
-  ['label' => 'Encomendas', 'url' => ['/encomendas/index']],
+  ['label' => 'Encomendas', 'url' => ['/encomendas/index ']],
   Yii::$app->user->isGuest
    ? ['label' => 'Login', 'url' => ['/site/login']]
    : '<li class="nav-item">'
