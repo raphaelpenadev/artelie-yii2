@@ -16,7 +16,22 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'tipo')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'valor_unitario')->textInput() ?>
+    <?= $form->field($model, 'vlUnitarioStr', [
+        'template' => 'Valor da Unidade<div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="vlUnitarioAddon">R$</span>
+                    </div>
+                    {input}
+                    {hint}
+                    {error}
+                </div>'
+    ])->textInput([
+        'maxlength' => true,
+        'data-mask' => '#.##0,00',
+        'data-mask-reverse' => 'true',
+        'aria-describedby' => 'vlUnitarioAddon',
+    ]) ?>
+    <?= $form->field($model, 'valor_unitario')->hiddenInput()->label(false) ?>
 
     <?= $form->field($model, 'quantidade')->textInput() ?>
 
@@ -27,3 +42,25 @@ use yii\widgets\ActiveForm;
     <?php ActiveForm::end(); ?>
 
 </div>
+
+<?php
+$vlUnitarioInput = Html::getInputId($model, 'valor_unitario');
+$vlUnitarioStr = Html::getInputId($model, 'vlUnitarioStr');
+
+$this->registerJsFile('https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js', ['depends' => 'app\assets\AppAsset']);
+
+$this->registerJs(<<<JS
+$("#$form->id").on('beforeSubmit', function () {
+    $("#$vlUnitarioStr").unmask();
+    
+    const val = $("#$vlUnitarioStr").val();
+
+    if (val != null && val != '') {
+        $("#$vlUnitarioInput").val(
+            parseFloat(val ?? 0) / 100
+        );
+    }
+
+    return true;
+});
+JS);

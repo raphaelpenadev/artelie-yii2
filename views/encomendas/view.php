@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Delete', ['delete', 'idencomenda' => $model->idencomenda], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Tem certeza que deseja excluir esse registro?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -29,11 +29,37 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'idencomenda',
-            'idcliente',
+
+            [
+                'attribute' => 'idcliente',
+                'value' => function ($model) {
+                    return $model->idcliente0->nome;
+                }
+            ],
             'descricao',
-            'valor',
-            'status',
+            [
+                'attribute' => 'valor',
+                'value' => function ($model) {
+                    return number_format($model->valor, 2, ',', '.');
+                }
+            ],
+            [
+                'label' => 'Status',
+                'attribute' => 'status',
+                'value' => function ($model) {
+                    switch ($model->status) {
+                        case 'P':
+                            return 'Pendente';
+                            break;
+                        case 'A':
+                            return 'Aceito';
+                            break;
+                        case 'F':
+                            return 'Finalizado';
+                            break;
+                    }
+                }
+            ],
         ],
     ]) ?>
 

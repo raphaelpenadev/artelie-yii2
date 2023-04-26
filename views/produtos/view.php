@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Delete', ['delete', 'idproduto' => $model->idproduto], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Tem certeza que deseja excluir esse registro?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -29,11 +29,23 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'idproduto',
+            // 'idproduto',
             'descricao',
             'tipo',
-            'valor_unitario',
+            [
+                'attribute' => 'valor_unitario',
+                'value' => function ($model) {
+                    return number_format($model->valor_unitario, 2, ',', '.');
+                }
+            ],
             'quantidade',
+            [
+                'label' => 'Valor Total',
+                'value' => function ($model) {
+                    $valorTotal = $model->valor_unitario * $model->quantidade;
+                    return $valorTotal;
+                }
+            ]
         ],
     ]) ?>
 

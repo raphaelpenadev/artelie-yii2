@@ -11,6 +11,12 @@ use app\models\Encomendas;
  */
 class EncomendasSearch extends Encomendas
 {
+
+    /**
+     * @var string
+     */
+    public $clienteNome;
+
     /**
      * {@inheritdoc}
      */
@@ -18,7 +24,7 @@ class EncomendasSearch extends Encomendas
     {
         return [
             [['idencomenda', 'idcliente'], 'integer'],
-            [['descricao', 'status'], 'safe'],
+            [['descricao', 'status', 'clienteNome'], 'safe'],
             [['valor'], 'number'],
         ];
     }
@@ -41,13 +47,19 @@ class EncomendasSearch extends Encomendas
      */
     public function search($params)
     {
-        $query = Encomendas::find();
+        $query = Encomendas::find()
+            ->joinWith('idcliente0');
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+        $dataProvider->sort->attributes['clienteNome'] = [
+            'asc' => ['clientes.nome' => SORT_ASC],
+            'desc' => ['clientes.nome' => SORT_DESC]
+        ];
 
         $this->load($params);
 
@@ -66,6 +78,8 @@ class EncomendasSearch extends Encomendas
 
         $query->andFilterWhere(['like', 'descricao', $this->descricao])
             ->andFilterWhere(['like', 'status', $this->status]);
+
+        $query->andFilterWhere(['like', 'clientes.nome', $this->clienteNome]);
 
         return $dataProvider;
     }

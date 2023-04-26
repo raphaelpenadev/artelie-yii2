@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /** @var yii\web\View $this */
 /** @var app\models\Clientes $model */
 
-$this->title = $model->idcliente;
+$this->title = $model->nome;
 $this->params['breadcrumbs'][] = ['label' => 'Clientes', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
@@ -16,11 +16,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'idcliente' => $model->idcliente], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'idcliente' => $model->idcliente], [
+        <?= Html::a('Atualizar', ['update', 'idcliente' => $model->idcliente], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Excluir', ['delete', 'idcliente' => $model->idcliente], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Tem certeza que deseja excluir esse registro?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -29,10 +29,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'idcliente',
-            'idencomenda',
             'nome',
             'descricao',
+            'contato:ntext',
         ],
     ]) ?>
 

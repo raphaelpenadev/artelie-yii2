@@ -2,11 +2,12 @@
 
 namespace app\controllers;
 
-use app\models\Encomendas;
-use app\models\search\EncomendasSearch;
+use Yii;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
+use app\models\Encomendas;
 use yii\filters\VerbFilter;
+use yii\web\NotFoundHttpException;
+use app\models\search\EncomendasSearch;
 
 /**
  * EncomendasController implements the CRUD actions for Encomendas model.
@@ -41,9 +42,16 @@ class EncomendasController extends Controller
         $searchModel = new EncomendasSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
+        $model = new Encomendas();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $model = new Encomendas(); //reset model
+        }
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'model' => $model
         ]);
     }
 
@@ -53,10 +61,10 @@ class EncomendasController extends Controller
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($idencomenda)
+    public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($idencomenda),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -71,7 +79,7 @@ class EncomendasController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'idencomenda' => $model->idencomenda]);
+                return $this->redirect(['view', 'id' => $model->idencomenda]);
             }
         } else {
             $model->loadDefaultValues();
@@ -89,12 +97,12 @@ class EncomendasController extends Controller
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($idencomenda)
+    public function actionUpdate($id)
     {
-        $model = $this->findModel($idencomenda);
+        $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'idencomenda' => $model->idencomenda]);
+            return $this->redirect(['view', 'id' => $model->idencomenda]);
         }
 
         return $this->render('update', [
@@ -109,9 +117,9 @@ class EncomendasController extends Controller
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($idencomenda)
+    public function actionDelete($id)
     {
-        $this->findModel($idencomenda)->delete();
+        $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
@@ -123,9 +131,9 @@ class EncomendasController extends Controller
      * @return Encomendas the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($idencomenda)
+    protected function findModel($id)
     {
-        if (($model = Encomendas::findOne(['idencomenda' => $idencomenda])) !== null) {
+        if (($model = Encomendas::findOne(['idencomenda' => $id])) !== null) {
             return $model;
         }
 

@@ -8,9 +8,9 @@ use Yii;
  * This is the model class for table "clientes".
  *
  * @property int $idcliente
- * @property int $idencomenda
  * @property string $nome
  * @property string|null $descricao
+ * @property string|null $contato
  *
  * @property Encomendas[] $encomendas
  */
@@ -31,8 +31,8 @@ class Clientes extends \yii\db\ActiveRecord
     {
         return [
             [['nome'], 'required'],
+            [['contato'], 'string'],
             [['nome', 'descricao'], 'string', 'max' => 300],
-            [['idencomenda'], 'exist', 'skipOnError' => true, 'targetClass' => Encomendas::class, 'targetAttribute' => ['idencomenda' => 'idencomenda']],
         ];
     }
 
@@ -44,7 +44,8 @@ class Clientes extends \yii\db\ActiveRecord
         return [
             'idcliente' => 'Idcliente',
             'nome' => 'Nome',
-            'descricao' => 'Descricao',
+            'descricao' => 'Descrição',
+            'contato' => 'Contato',
         ];
     }
 

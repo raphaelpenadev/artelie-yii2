@@ -4,8 +4,10 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use kartik\icons\Icon;
 use yii\grid\GridView;
-use app\models\Clientes;
+use yii\bootstrap5\Modal;
 use yii\grid\ActionColumn;
+
+Icon::map($this);
 
 /** @var yii\web\View $this */
 /** @var app\models\search\ClientesSearch $searchModel */
@@ -16,10 +18,17 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="clientes-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Icon::show('globe') . Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Novo - Cliente', ['create'], ['class' => 'btn btn-success']) ?>
+        <?php Modal::begin([
+            'title' => '<h4>Novo Cliente</h4>',
+            'toggleButton' => ['label' => 'Novo Cliente', 'class' => 'btn btn-success'],
+        ]);
+
+        echo $this->render('_form', ['model' => $model]);
+
+        Modal::end(); ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); 
@@ -28,19 +37,19 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
-        'pager' => [
-            'class' => 'yii\bootstrap5\LinkPager',
-            'options' => ['class' => 'pagination justify-content-center']
-        ],
         'columns' => [
             // ['class' => 'yii\grid\SerialColumn'],
 
             // 'idcliente',
-            'nome',
             [
-                'label' => 'Descrição',
-                'attribute' => 'descricao',
+                'attribute' => 'nome',
+                'label' => 'Cliente',
+                'value' => function ($model) {
+                    return $model->nome;
+                }
             ],
+            'descricao',
+            'contato:ntext',
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '<div class="d-flex justify-content-around">{view}{update}{delete}</div>',
@@ -48,27 +57,27 @@ $this->params['breadcrumbs'][] = $this->title;
                     'class' => 'col-xs-1',
                 ],
                 'buttons' => [
-                    'view' => function ($url) {
-                        return Html::a(Icon::show('eye', ['framework' => Icon::FAL]), $url, [
-                            'title' => 'Visualizar',
+                    'view' =>  function ($url, $model) {
+                        return Html::a(\kartik\icons\Icon::show('eye'), $url, [
+                            'title' => Yii::t('yii', 'View'),
                             'class' => 'text-success mr-1'
                         ]);
                     },
-                    'update' => function ($url) {
-                        return Html::a(Icon::show('sync', ['framework' => Icon::FAL]), $url, [
-                            'title' => 'Atualizar',
-                            'class' => 'text-success mr-1'
+                    'update' =>  function ($url, $model) {
+                        return Html::a(\kartik\icons\Icon::show('pencil-alt'), $url, [
+                            'title' => Yii::t('yii', 'Update'),
+                            'class' => 'text-primary mr-1'
                         ]);
                     },
-                    'delete' => function ($url) {
-                        return Html::a(Icon::show('trash', ['framework' => Icon::FAL]), $url, [
-                            'title' => 'Deletar',
-                            'class' => 'text-success mr-1',
-                            'data-confirm' => 'Você tem certeza que deseja excluir o registro?',
-                            'data-method' => 'POST'
+                    'delete' => function ($url, $model) {
+                        return Html::a(\kartik\icons\Icon::show('trash'), $url, [
+                            'title' => Yii::t('yii', 'Delete'),
+                            'class' => 'text-danger',
+                            'data-confirm' => Yii::t('yii', 'Tem certeza que deseja excluir esse registro?'),
+                            'data-method' => 'post',
                         ]);
                     }
-                ]
+                ],
             ],
         ],
     ]); ?>

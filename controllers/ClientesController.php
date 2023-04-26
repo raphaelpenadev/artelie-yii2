@@ -2,11 +2,12 @@
 
 namespace app\controllers;
 
-use app\models\Clientes;
-use app\models\search\ClientesSearch;
+use Yii;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
+use app\models\Clientes;
 use yii\filters\VerbFilter;
+use yii\web\NotFoundHttpException;
+use app\models\search\ClientesSearch;
 
 /**
  * ClientesController implements the CRUD actions for Clientes model.
@@ -41,9 +42,16 @@ class ClientesController extends Controller
         $searchModel = new ClientesSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
+        $model = new Clientes();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $model = new Clientes(); //reset model
+        }
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'model' => $model
         ]);
     }
 
@@ -53,10 +61,10 @@ class ClientesController extends Controller
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($idcliente)
+    public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($idcliente),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -71,7 +79,7 @@ class ClientesController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'idcliente' => $model->idcliente]);
+                return $this->redirect(['view', 'id' => $model->idcliente]);
             }
         } else {
             $model->loadDefaultValues();
@@ -89,12 +97,12 @@ class ClientesController extends Controller
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($idcliente)
+    public function actionUpdate($id)
     {
-        $model = $this->findModel($idcliente);
+        $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'idcliente' => $model->idcliente]);
+            return $this->redirect(['view', 'id' => $model->idcliente]);
         }
 
         return $this->render('update', [
@@ -109,9 +117,9 @@ class ClientesController extends Controller
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($idcliente)
+    public function actionDelete($id)
     {
-        $this->findModel($idcliente)->delete();
+        $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
@@ -123,9 +131,9 @@ class ClientesController extends Controller
      * @return Clientes the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($idcliente)
+    protected function findModel($id)
     {
-        if (($model = Clientes::findOne(['idcliente' => $idcliente])) !== null) {
+        if (($model = Clientes::findOne(['idcliente' => $id])) !== null) {
             return $model;
         }
 

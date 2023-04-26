@@ -18,6 +18,9 @@ use Yii;
  */
 class Encomendas extends \yii\db\ActiveRecord
 {
+
+    public $valorEncomendaStr;
+
     /**
      * {@inheritdoc}
      */
@@ -35,7 +38,7 @@ class Encomendas extends \yii\db\ActiveRecord
             [['idcliente'], 'required'],
             [['idcliente'], 'integer'],
             [['valor'], 'number'],
-            [['status'], 'string'],
+            [['status', 'valorEncomendaStr'], 'string'],
             [['descricao'], 'string', 'max' => 300],
             [['idcliente'], 'exist', 'skipOnError' => true, 'targetClass' => Clientes::class, 'targetAttribute' => ['idcliente' => 'idcliente']],
         ];
@@ -49,7 +52,7 @@ class Encomendas extends \yii\db\ActiveRecord
         return [
             'idencomenda' => 'Idencomenda',
             'idcliente' => 'Idcliente',
-            'descricao' => 'Descricao',
+            'descricao' => 'Descrição',
             'valor' => 'Valor',
             'status' => 'Status',
         ];

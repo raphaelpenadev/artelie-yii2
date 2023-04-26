@@ -17,8 +17,9 @@ class ClientesSearch extends Clientes
     public function rules()
     {
         return [
-            [['idcliente', 'idencomenda'], 'integer'],
-            [['nome', 'descricao'], 'safe'],
+            [['idcliente'], 'integer'],
+            [['nome'], 'string'],
+            [['nome', 'descricao', 'contato'], 'safe'],
         ];
     }
 
@@ -48,6 +49,11 @@ class ClientesSearch extends Clientes
             'query' => $query,
         ]);
 
+        $dataProvider->sort->attributes['nome'] = [
+            'asc' => ['nome' => SORT_ASC],
+            'desc' => ['nome' => SORT_DESC],
+        ];
+
         $this->load($params);
 
         if (!$this->validate()) {
@@ -58,12 +64,13 @@ class ClientesSearch extends Clientes
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'idcliente' => $this->idcliente,
-            'idencomenda' => $this->idencomenda,
+            'or',
+            ['like', 'nome', $this->nome],
         ]);
 
         $query->andFilterWhere(['like', 'nome', $this->nome])
-            ->andFilterWhere(['like', 'descricao', $this->descricao]);
+            ->andFilterWhere(['like', 'descricao', $this->descricao])
+            ->andFilterWhere(['like', 'contato', $this->contato]);
 
         return $dataProvider;
     }

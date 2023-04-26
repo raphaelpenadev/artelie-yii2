@@ -2,11 +2,12 @@
 
 namespace app\controllers;
 
-use app\models\Produtos;
-use app\models\search\ProdutosSearch;
+use Yii;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
+use app\models\Produtos;
 use yii\filters\VerbFilter;
+use yii\web\NotFoundHttpException;
+use app\models\search\ProdutosSearch;
 
 /**
  * ProdutosController implements the CRUD actions for Produtos model.
@@ -41,9 +42,16 @@ class ProdutosController extends Controller
         $searchModel = new ProdutosSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
+        $model = new Produtos();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $model = new Produtos(); //reset model
+        }
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'model' => $model
         ]);
     }
 
@@ -53,10 +61,10 @@ class ProdutosController extends Controller
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($idproduto)
+    public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($idproduto),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -71,7 +79,7 @@ class ProdutosController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'idproduto' => $model->idproduto]);
+                return $this->redirect(['view', 'id' => $model->idproduto]);
             }
         } else {
             $model->loadDefaultValues();
@@ -89,12 +97,12 @@ class ProdutosController extends Controller
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($idproduto)
+    public function actionUpdate($id)
     {
-        $model = $this->findModel($idproduto);
+        $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'idproduto' => $model->idproduto]);
+            return $this->redirect(['view', 'id' => $model->idproduto]);
         }
 
         return $this->render('update', [
@@ -109,9 +117,9 @@ class ProdutosController extends Controller
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($idproduto)
+    public function actionDelete($id)
     {
-        $this->findModel($idproduto)->delete();
+        $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
@@ -123,9 +131,9 @@ class ProdutosController extends Controller
      * @return Produtos the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($idproduto)
+    protected function findModel($id)
     {
-        if (($model = Produtos::findOne(['idproduto' => $idproduto])) !== null) {
+        if (($model = Produtos::findOne(['idproduto' => $id])) !== null) {
             return $model;
         }
 

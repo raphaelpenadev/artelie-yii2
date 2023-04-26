@@ -15,6 +15,9 @@ use Yii;
  */
 class Produtos extends \yii\db\ActiveRecord
 {
+
+    public $vlUnitarioStr;
+
     /**
      * {@inheritdoc}
      */
@@ -32,7 +35,7 @@ class Produtos extends \yii\db\ActiveRecord
             [['descricao', 'tipo'], 'required'],
             [['valor_unitario'], 'number'],
             [['quantidade'], 'integer'],
-            [['descricao', 'tipo'], 'string', 'max' => 300],
+            [['descricao', 'tipo', 'vlUnitarioStr'], 'string', 'max' => 300],
         ];
     }
 
@@ -43,7 +46,7 @@ class Produtos extends \yii\db\ActiveRecord
     {
         return [
             'idproduto' => 'Idproduto',
-            'descricao' => 'Descricao',
+            'descricao' => 'Descrição',
             'tipo' => 'Tipo',
             'valor_unitario' => 'Valor Unitario',
             'quantidade' => 'Quantidade',

@@ -3,12 +3,15 @@
 namespace app\controllers;
 
 use Yii;
-use yii\filters\AccessControl;
-use yii\web\Controller;
 use yii\web\Response;
+use yii\web\Controller;
+use app\models\Clientes;
+use app\models\Produtos;
+use app\models\Encomendas;
 use yii\filters\VerbFilter;
-use app\models\LoginForm;
-use app\models\ContactForm;
+use yii\filters\AccessControl;
+use app\models\forms\LoginForm;
+use app\models\forms\ContactForm;
 
 class SiteController extends Controller
 {
@@ -61,7 +64,16 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+
+        $clientesList = Clientes::find()->all();
+        $produtosList = Produtos::find()->all();
+        $encomendasList = Encomendas::find()->all();
+
+        return $this->render('index', [
+            'clientesList' => $clientesList,
+            'produtosList' => $produtosList,
+            'encomendasList' => $encomendasList
+        ]);
     }
 
     /**
@@ -76,6 +88,7 @@ class SiteController extends Controller
         }
 
         $model = new LoginForm();
+
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         }

@@ -1,10 +1,14 @@
 <?php
 
-use app\models\Produtos;
-use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\grid\ActionColumn;
+use yii\helpers\Html;
+use kartik\icons\Icon;
 use yii\grid\GridView;
+use app\models\Produtos;
+use yii\bootstrap5\Modal;
+use yii\grid\ActionColumn;
+
+Icon::map($this);
 
 /** @var yii\web\View $this */
 /** @var app\models\search\ProdutosSearch $searchModel */
@@ -18,7 +22,14 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Produtos', ['create'], ['class' => 'btn btn-success']) ?>
+        <?php Modal::begin([
+            'title' => '<h4>Novo produto</h4>',
+            'toggleButton' => ['label' => 'Novo Produto', 'class' => 'btn btn-success'],
+        ]);
+
+        echo $this->render('_form', ['model' => $model]);
+
+        Modal::end(); ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); 
@@ -28,18 +39,53 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            // ['class' => 'yii\grid\SerialColumn'],
 
-            'idproduto',
+            // 'idproduto',
             'descricao',
             'tipo',
-            'valor_unitario',
+            [
+                'attribute' => 'valor_unitario',
+                'value' => function ($model) {
+                    return number_format($model->valor_unitario, 2, ',', '.');
+                }
+            ],
             'quantidade',
             [
-                'class' => ActionColumn::class,
-                'urlCreator' => function ($action, Produtos $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'idproduto' => $model->idproduto]);
+                'label' => 'Valor Total',
+                'value' => function ($model) {
+                    $valorTotal = $model->valor_unitario * $model->quantidade;
+                    return 'R$ ' . number_format($valorTotal, 2, ',', '.');
                 }
+            ],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '<div class="d-flex justify-content-around">{view}{update}{delete}</div>',
+                'contentOptions' => [
+                    'class' => 'col-xs-1',
+                ],
+                'buttons' => [
+                    'view' =>  function ($url, $model) {
+                        return Html::a(\kartik\icons\Icon::show('eye'), $url, [
+                            'title' => Yii::t('yii', 'View'),
+                            'class' => 'text-success mr-1'
+                        ]);
+                    },
+                    'update' =>  function ($url, $model) {
+                        return Html::a(\kartik\icons\Icon::show('pencil-alt'), $url, [
+                            'title' => Yii::t('yii', 'Update'),
+                            'class' => 'text-primary mr-1'
+                        ]);
+                    },
+                    'delete' => function ($url, $model) {
+                        return Html::a(\kartik\icons\Icon::show('trash'), $url, [
+                            'title' => Yii::t('yii', 'Delete'),
+                            'class' => 'text-danger',
+                            'data-confirm' => Yii::t('yii', 'Tem certeza que deseja excluir esse registro?'),
+                            'data-method' => 'post',
+                        ]);
+                    }
+                ],
             ],
         ],
     ]); ?>
