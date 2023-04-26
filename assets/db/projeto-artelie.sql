@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 25-Abr-2023 às 22:19
+-- Tempo de geração: 26-Abr-2023 às 22:35
 -- Versão do servidor: 10.4.28-MariaDB
 -- versão do PHP: 8.0.28
 
@@ -29,10 +29,20 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `clientes` (
   `idcliente` int(11) NOT NULL,
-  `idencomenda` int(11) NOT NULL,
   `nome` varchar(300) NOT NULL,
-  `descricao` varchar(300) DEFAULT NULL
+  `descricao` varchar(300) DEFAULT NULL,
+  `contato` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `clientes`
+--
+
+INSERT INTO `clientes` (`idcliente`, `nome`, `descricao`, `contato`) VALUES
+(1, 'Teste', 'Teste', 'Teste'),
+(2, 'Teste', 'Teste', 'Teste'),
+(3, 'Teste', 'Teste', 'Teste'),
+(9, '2teste', 'Teste', 'Teste');
 
 -- --------------------------------------------------------
 
@@ -47,6 +57,13 @@ CREATE TABLE `encomendas` (
   `valor` double DEFAULT NULL,
   `status` enum('P','A','F') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `encomendas`
+--
+
+INSERT INTO `encomendas` (`idencomenda`, `idcliente`, `descricao`, `valor`, `status`) VALUES
+(1, 1, 'Teste', 100, 'A');
 
 -- --------------------------------------------------------
 
@@ -63,6 +80,13 @@ CREATE TABLE `produtos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Extraindo dados da tabela `produtos`
+--
+
+INSERT INTO `produtos` (`idproduto`, `descricao`, `tipo`, `valor_unitario`, `quantidade`) VALUES
+(1, 'Teste de Descricao', 'Resma', 1, 10);
+
+--
 -- Índices para tabelas despejadas
 --
 
@@ -70,8 +94,7 @@ CREATE TABLE `produtos` (
 -- Índices para tabela `clientes`
 --
 ALTER TABLE `clientes`
-  ADD PRIMARY KEY (`idcliente`),
-  ADD KEY `idencomenda` (`idencomenda`);
+  ADD PRIMARY KEY (`idcliente`);
 
 --
 -- Índices para tabela `encomendas`
@@ -94,19 +117,19 @@ ALTER TABLE `produtos`
 -- AUTO_INCREMENT de tabela `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `idcliente` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idcliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de tabela `encomendas`
 --
 ALTER TABLE `encomendas`
-  MODIFY `idencomenda` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idencomenda` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de tabela `produtos`
 --
 ALTER TABLE `produtos`
-  MODIFY `idproduto` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idproduto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restrições para despejos de tabelas
