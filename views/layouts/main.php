@@ -3,13 +3,15 @@
 /** @var yii\web\View $this */
 /** @var string $content */
 
-use app\assets\AppAsset;
 use app\widgets\Alert;
-use yii\bootstrap5\Breadcrumbs;
-use yii\bootstrap5\Html;
+use kartik\icons\Icon;
 use yii\bootstrap5\Nav;
+use app\assets\AppAsset;
+use yii\bootstrap5\Html;
 use yii\bootstrap5\NavBar;
+use yii\bootstrap5\Breadcrumbs;
 
+Icon::map($this);
 AppAsset::register($this);
 
 $this->registerCsrfMetaTags();
@@ -17,7 +19,7 @@ $this->registerMetaTag(['charset' => 'UTF-8'], 'charset');
 $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1, shrink-to-fit=no']);
 $this->registerMetaTag(['name' => 'description', 'content' => $this->params['meta_description'] ?? '']);
 $this->registerMetaTag(['name' => 'keywords', 'content' => $this->params['meta_keywords'] ?? '']);
-$this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii::getAlias('@web/favicon.ico')]);
+$this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii::getAlias('@web/assets/icon.png')]);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>

@@ -9,8 +9,6 @@ use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Modal;
 use yii\grid\ActionColumn;
 
-Icon::map($this);
-
 /** @var yii\web\View $this */
 /** @var app\models\search\ProdutosSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */

@@ -14,7 +14,7 @@ use yii\bootstrap5\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <div class="col-md-12 row">
+    <div class="row">
         <?= $form->field($model, 'idcliente')->dropDownList(ArrayHelper::map(Clientes::find()
             ->all(), 'idcliente', 'nome'), [
             'prompt' => 'Informe o cliente',
@@ -50,7 +50,7 @@ use yii\bootstrap5\ActiveForm;
 </div>
 <!-- FIM EDITANDO -->
 
-<div class="form-group">
+<div class="form-group mt-2">
     <?= Html::submitButton('Salvar', ['class' => 'btn btn-success']) ?>
 </div>
 
