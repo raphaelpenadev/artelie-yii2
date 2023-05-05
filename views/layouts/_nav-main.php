@@ -25,16 +25,27 @@ echo Nav::widget([
     ['label' => 'Produtos', 'url' => ['/produtos']],
     ['label' => 'Clientes', 'url' => ['/clientes']],
     ['label' => 'Encomendas', 'url' => ['/encomendas']],
+
+  ]
+]);
+
+
+echo Nav::widget([
+  'options' => [
+    'class' => 'navbar-nav ml-auto'
+  ],
+  'encodeLabels' => false,
+  'items' => [
     Yii::$app->user->isGuest
-      ? ['label' => Icon::show('user') . 'Login', 'url' => ['/site/login']]
+      ? ['label' => Icon::show('user') . 'Entrar', 'url' => ['/site/login']]
       : '<li class="nav-item">'
       . Html::beginForm(['/site/logout'])
       . Html::submitButton(
-        'Logout (' . Yii::$app->user->identity->username . ')',
+        'Sair (' . Yii::$app->user->identity->username . ')',
         ['class' => 'nav-link btn btn-link logout']
       )
       . Html::endForm()
       . '</li>'
-  ]
+  ],
 ]);
 NavBar::end();
