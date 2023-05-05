@@ -40,10 +40,12 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     <main id="main" class="flex-shrink-0" role="main">
         <div class="container">
             <?php if (!empty($this->params['breadcrumbs'])) : ?>
-                <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs'], 'options' => ['class' => 'rounded p-2 m-0', 'style' => 'background-color:#E8E8E8']]) ?>
+                <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs'], 'options' => ['class' => 'rounded p-2 mb-2', 'style' => 'background-color:#E8E8E8']]) ?>
             <?php endif ?>
             <?= Alert::widget() ?>
-            <?= $content ?>
+            <div class="my-2">
+                <?= $content ?>
+            </div>
         </div>
     </main>
 

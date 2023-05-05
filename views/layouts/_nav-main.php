@@ -21,10 +21,10 @@ echo Nav::widget([
   'options' => ['class' => 'navbar-nav mx-auto'],
   'encodeLabels' => false,
   'items' => [
-    ['label' => 'Inicio', 'url' => ['/site/index']],
-    ['label' => 'Produtos', 'url' => ['/produtos/index']],
-    ['label' => 'Clientes', 'url' => ['/clientes/index']],
-    ['label' => 'Encomendas', 'url' => ['/encomendas/index ']],
+    ['label' => 'Inicio', 'url' => ['/']],
+    ['label' => 'Produtos', 'url' => ['/produtos']],
+    ['label' => 'Clientes', 'url' => ['/clientes']],
+    ['label' => 'Encomendas', 'url' => ['/encomendas']],
     Yii::$app->user->isGuest
       ? ['label' => Icon::show('user') . 'Login', 'url' => ['/site/login']]
       : '<li class="nav-item">'

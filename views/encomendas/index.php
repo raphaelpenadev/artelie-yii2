@@ -2,6 +2,7 @@
 
 use yii\helpers\Url;
 use yii\helpers\Html;
+use yii\widgets\Pjax;
 use kartik\icons\Icon;
 use yii\grid\GridView;
 use yii\bootstrap5\Modal;
@@ -35,6 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); 
     ?>
 
+    <?php Pjax::begin(['id' => 'encomendas']) ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -79,6 +81,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             [
+                'label' => 'Data de Entrega',
+                'attribute' => 'dt_entrega',
+                'value' => function ($model) {
+                    return date('d/m/Y', strtotime($model->dt_entrega));
+                }
+            ],
+            [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '<div class="d-flex justify-content-around">{update}{delete}</div>',
                 'contentOptions' => [
@@ -108,7 +117,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ],
         ],
-    ]); ?>
+    ]);
+    Pjax::end(); ?>
 
 
 </div>

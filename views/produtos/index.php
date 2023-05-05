@@ -2,12 +2,10 @@
 
 use yii\helpers\Url;
 use yii\helpers\Html;
+use yii\widgets\Pjax;
 use kartik\icons\Icon;
 use yii\grid\GridView;
-use app\models\Produtos;
-use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Modal;
-use yii\grid\ActionColumn;
 
 /** @var yii\web\View $this */
 /** @var app\models\search\ProdutosSearch $searchModel */
@@ -18,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="produtos-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Icon::show('briefcase') . Html::encode($this->title) ?></h1>
 
     <p>
         <?php Modal::begin([
@@ -33,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); 
     ?>
-
+    <?php Pjax::begin(['id' => 'produtos']) ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -46,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'valor_unitario',
                 'value' => function ($model) {
-                    return number_format($model->valor_unitario, 2, ',', '.');
+                    return 'R$ ' . number_format($model->valor_unitario, 2, ',', '.');
                 }
             ],
             'quantidade',
@@ -87,7 +85,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ],
         ],
-    ]); ?>
+    ]);
+    Pjax::end() ?>
 
 
 </div>

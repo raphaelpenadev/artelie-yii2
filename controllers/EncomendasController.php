@@ -8,6 +8,7 @@ use app\models\Encomendas;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 use app\models\search\EncomendasSearch;
+use yii\db\IntegrityException;
 
 /**
  * EncomendasController implements the CRUD actions for Encomendas model.
@@ -77,9 +78,17 @@ class EncomendasController extends Controller
     {
         $model = new Encomendas();
 
+        $dataHoje = date('d/m/Y');
+
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->idencomenda]);
+            if ($model->load($this->request->post())) {
+
+                var_dump(date('d', strtotime($model->dt_entrega)), date('d', strtotime($dataHoje)));
+                exit;
+
+                if ($model->save()) {
+                    return $this->redirect(['view', 'id' => $model->idencomenda]);
+                }
             }
         } else {
             $model->loadDefaultValues();
@@ -119,7 +128,14 @@ class EncomendasController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+
+        try {
+            $model->delete();
+        } catch (IntegrityException $ex) {
+            Yii::$app->session->setFlash('danger', 'Não foi possivel excluir esse registro, pois o mesmo possui ligação com outros registros, verifique a área de encomendas');
+            return $this->redirect(['index']);
+        }
 
         return $this->redirect(['index']);
     }
