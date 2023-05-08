@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /** @var yii\web\View $this */
 /** @var app\models\Produtos $model */
 
-$this->title = $model->idproduto;
+$this->title = 'Relatório: ' . $model->descricao;
 $this->params['breadcrumbs'][] = ['label' => 'Produtos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
@@ -16,8 +16,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'idproduto' => $model->idproduto], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'idproduto' => $model->idproduto], [
+        <?= Html::a('Atualizar', ['update', 'idproduto' => $model->idproduto], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Excluir', ['delete', 'idproduto' => $model->idproduto], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Tem certeza que deseja excluir esse registro?',

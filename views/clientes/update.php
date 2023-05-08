@@ -7,7 +7,7 @@ use yii\helpers\Html;
 
 $this->title = 'Atualizar Cliente: ' . $model->nome;
 $this->params['breadcrumbs'][] = ['label' => 'Clientes', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->nome, 'url' => ['view', 'idcliente' => $model->idcliente]];
+$this->params['breadcrumbs'][] = ['label' => $model->nome, 'url' => ['view', 'id' => $model->idcliente]];
 $this->params['breadcrumbs'][] = 'Atualizar';
 ?>
 <div class="clientes-update">

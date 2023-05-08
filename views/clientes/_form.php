@@ -18,7 +18,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'contato')->textArea(['rows' => 5]) ?>
 
-    <div class="form-group">
+    <div class="form-group my-2">
         <?= Html::submitButton('Salvar', ['class' => 'btn btn-success']) ?>
     </div>
 

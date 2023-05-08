@@ -50,7 +50,7 @@ use yii\bootstrap5\ActiveForm;
 </div>
 <!-- FIM EDITANDO -->
 
-<div class="form-group">
+<div class="form-group my-2">
     <?= Html::submitButton('Salvar', ['class' => 'btn btn-success']) ?>
 </div>
 

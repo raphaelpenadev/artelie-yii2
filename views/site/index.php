@@ -22,9 +22,9 @@ $this->title = 'Arteliê';
                     </div>
                     <div class="card-body">
                         <h6 class="card-title text-center">Quantidade de Produtos Registrados</h6>
-                        <h2 class="text-center bold"><?= Html::a(count($produtosList), 'clientes', ['class' => 'text-decoration-none text-dark']) ?></h2>
+                        <h2 class="text-center bold"><?= Html::a(count($produtosList), 'produtos', ['class' => 'text-decoration-none text-dark']) ?></h2>
                         <div class="card text-center">
-                            <?= Html::a('Produtos', 'produtos', ['class' => 'btn btn-primary']) ?>
+                            <?= Html::a('Novo Produto', 'produtos/create', ['class' => 'btn btn-success']) ?>
                         </div>
                     </div>
                 </div>
@@ -38,7 +38,7 @@ $this->title = 'Arteliê';
                         <h6 class="card-title text-center">Quantidade de Clientes Registrados</h6>
                         <h2 class="text-center bold"><?= Html::a(count($clientesList), 'clientes', ['class' => 'text-decoration-none text-dark']) ?></h2>
                         <div class="card text-center">
-                            <?= Html::a('Clientes', 'clientes', ['class' => 'btn btn-primary']) ?>
+                            <?= Html::a('Novo Cliente', 'clientes/create', ['class' => 'btn btn-success']) ?>
                         </div>
                     </div>
                 </div>
@@ -50,9 +50,9 @@ $this->title = 'Arteliê';
                     </div>
                     <div class="card-body">
                         <h6 class="card-title text-center">Quantidade de Encomendas Registradas</h6>
-                        <h2 class="text-center bold"><?= Html::a(count($encomendasList), 'clientes', ['class' => 'text-decoration-none text-dark']) ?></h2>
+                        <h2 class="text-center bold"><?= Html::a(count($encomendasList), 'encomendas', ['class' => 'text-decoration-none text-dark']) ?></h2>
                         <div class="card text-center">
-                            <?= Html::a('Encomendas', 'encomendas', ['class' => 'btn btn-primary']) ?>
+                            <?= Html::a('Nova Encomenda', 'encomendas/create', ['class' => 'btn btn-success']) ?>
                         </div>
                     </div>
                 </div>
