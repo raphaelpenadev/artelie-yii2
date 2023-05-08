@@ -3,9 +3,11 @@
 namespace app\controllers;
 
 use Yii;
+use Exception;
 use yii\web\Controller;
 use app\models\Produtos;
 use yii\filters\VerbFilter;
+use yii\db\IntegrityException;
 use yii\web\NotFoundHttpException;
 use app\models\search\ProdutosSearch;
 
@@ -79,6 +81,7 @@ class ProdutosController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
+                Yii::$app->session->setFlash('success', 'Registro cadastrado com sucesso.');
                 return $this->redirect(['view', 'id' => $model->idproduto]);
             }
         } else {
@@ -102,6 +105,7 @@ class ProdutosController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', 'Registro atualizado com sucesso.');
             return $this->redirect(['view', 'id' => $model->idproduto]);
         }
 
@@ -119,7 +123,15 @@ class ProdutosController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+
+        try {
+            $model->delete();
+            Yii::$app->session->setFlash('success', 'Registro excluido com sucesso.');
+        } catch (IntegrityException $e) {
+            Yii::$app->session->setFlash('error', 'Não foi possivel excluir.');
+        }
+
 
         return $this->redirect(['index']);
     }

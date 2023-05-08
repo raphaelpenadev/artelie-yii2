@@ -69,6 +69,33 @@ class SiteController extends Controller
         $produtosList = Produtos::find()->all();
         $encomendasList = Encomendas::find()->all();
 
+        $dataHoje = date('d/m/Y');
+
+        foreach ($encomendasList as $encomenda) {
+            $diaDaEntrega = date('d', strtotime($encomenda->dt_entrega));
+            $diaParaComparar = date('d', strtotime($dataHoje));
+
+            $diferenca = $diaParaComparar - $diaDaEntrega;
+
+            if ($diferenca < 0) {
+                $diferenca *= -1;
+            }
+
+            if (date('Y', strtotime($encomenda->dt_entrega)) === date('Y', strtotime($dataHoje))) {
+
+                if (date('m', strtotime($encomenda->dt_entrega)) === date('m', strtotime($dataHoje))) {
+
+                    if ($diferenca == 2) {
+                        Yii::$app->session->addFlash('warning', 'Essa entrega é para daqui a dois dias: ' . $encomenda->descricao . ' | Cliente: '  . $encomenda->idcliente0->nome);
+                    }
+
+                    if (date('d', strtotime($encomenda->dt_entrega)) === date('d', strtotime($dataHoje))) {
+                        Yii::$app->session->addFlash('danger', 'Essa entrega é para hoje: ' . $encomenda->descricao . ' | Cliente: '  . $encomenda->idcliente0->nome);
+                    }
+                }
+            }
+        }
+
         return $this->render('index', [
             'clientesList' => $clientesList,
             'produtosList' => $produtosList,

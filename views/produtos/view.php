@@ -16,8 +16,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Atualizar', ['update', 'idproduto' => $model->idproduto], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Excluir', ['delete', 'idproduto' => $model->idproduto], [
+        <?= Html::a('Atualizar', ['update', 'id' => $model->idproduto], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Excluir', ['delete', 'id' => $model->idproduto], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Tem certeza que deseja excluir esse registro?',
@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'valor_unitario',
                 'value' => function ($model) {
-                    return number_format($model->valor_unitario, 2, ',', '.');
+                    return 'R$ ' . number_format($model->valor_unitario, 2, ',', '.');
                 }
             ],
             'quantidade',
@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Valor Total',
                 'value' => function ($model) {
                     $valorTotal = $model->valor_unitario * $model->quantidade;
-                    return $valorTotal;
+                    return 'R$ ' .  number_format($valorTotal, 2, ',', '.');
                 }
             ]
         ],

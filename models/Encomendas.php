@@ -12,6 +12,7 @@ use Yii;
  * @property string|null $descricao
  * @property float|null $valor
  * @property string|null $status
+ * @property string|null $dt_entrega 
  *
  * @property Clientes[] $clientes
  * @property Clientes $idcliente0
@@ -39,6 +40,7 @@ class Encomendas extends \yii\db\ActiveRecord
             [['idcliente'], 'integer'],
             [['valor'], 'number'],
             [['status', 'valorEncomendaStr'], 'string'],
+            [['dt_entrega'], 'safe'],
             [['descricao'], 'string', 'max' => 300],
             [['idcliente'], 'exist', 'skipOnError' => true, 'targetClass' => Clientes::class, 'targetAttribute' => ['idcliente' => 'idcliente']],
         ];
@@ -55,6 +57,7 @@ class Encomendas extends \yii\db\ActiveRecord
             'descricao' => 'Descrição',
             'valor' => 'Valor',
             'status' => 'Status',
+            'dt_entrega' => 'Entrega',
         ];
     }
 

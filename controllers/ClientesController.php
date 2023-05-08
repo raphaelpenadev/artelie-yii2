@@ -6,6 +6,7 @@ use Yii;
 use yii\web\Controller;
 use app\models\Clientes;
 use yii\filters\VerbFilter;
+use yii\db\IntegrityException;
 use yii\web\NotFoundHttpException;
 use app\models\search\ClientesSearch;
 
@@ -119,7 +120,14 @@ class ClientesController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+
+        try {
+            $model->delete();
+        } catch (IntegrityException $ex) {
+            Yii::$app->session->setFlash('danger', 'Não foi possivel excluir esse registro, verifique a área de encomendas.');
+            return $this->redirect(['index']);
+        }
 
         return $this->redirect(['index']);
     }

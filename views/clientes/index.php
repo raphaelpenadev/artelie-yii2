@@ -2,6 +2,7 @@
 
 use yii\helpers\Url;
 use yii\helpers\Html;
+use yii\widgets\Pjax;
 use kartik\icons\Icon;
 use yii\grid\GridView;
 use yii\bootstrap5\Modal;
@@ -34,6 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); 
     ?>
 
+    <?php Pjax::begin(['id' => 'clientes']) ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -52,17 +54,17 @@ $this->params['breadcrumbs'][] = $this->title;
             'contato:ntext',
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '<div class="d-flex justify-content-around">{view}{update}{delete}</div>',
+                'template' => '<div class="d-flex justify-content-around">{update}{delete}</div>',
                 'contentOptions' => [
                     'class' => 'col-xs-1',
                 ],
                 'buttons' => [
-                    'view' =>  function ($url, $model) {
+                    /*  'view' =>  function ($url, $model) {
                         return Html::a(\kartik\icons\Icon::show('eye'), $url, [
                             'title' => Yii::t('yii', 'View'),
                             'class' => 'text-success mr-1'
-                        ]);
-                    },
+                        ]); 
+                    },*/
                     'update' =>  function ($url, $model) {
                         return Html::a(\kartik\icons\Icon::show('pencil-alt'), $url, [
                             'title' => Yii::t('yii', 'Update'),
@@ -80,7 +82,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ],
         ],
-    ]); ?>
+    ]);
+    Pjax::end() ?>
 
 
 </div>

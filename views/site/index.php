@@ -1,6 +1,9 @@
 <?php
 
 use yii\helpers\Html;
+use app\assets\AppAsset;
+
+AppAsset::register($this);
 
 /** @var yii\web\View $this */
 
@@ -9,7 +12,7 @@ $this->title = 'Arteliê';
 <div class="site-index">
 
     <div class="jumbotron text-center bg-transparent my-5">
-        <h1 class="display-4">Arteliê</h1>
+        <h1 class="display-4"><?= Html::img('@web/assets/logo.png') ?></h1>
     </div>
 
     <div class="body-content">
@@ -22,9 +25,9 @@ $this->title = 'Arteliê';
                     </div>
                     <div class="card-body">
                         <h6 class="card-title text-center">Quantidade de Produtos Registrados</h6>
-                        <h2 class="text-center bold"><?= Html::a(count($produtosList), 'produtos', ['class' => 'text-decoration-none text-dark']) ?></h2>
+                        <h2 class="text-center bold my-4"><?= Html::a(count($produtosList), 'clientes', ['class' => 'text-decoration-none text-dark']) ?></h2>
                         <div class="card text-center">
-                            <?= Html::a('Novo Produto', 'produtos/create', ['class' => 'btn btn-success']) ?>
+                            <?= Html::a('Produtos', './produtos', ['class' => 'btn btn-primary']) ?>
                         </div>
                     </div>
                 </div>
@@ -36,9 +39,9 @@ $this->title = 'Arteliê';
                     </div>
                     <div class="card-body">
                         <h6 class="card-title text-center">Quantidade de Clientes Registrados</h6>
-                        <h2 class="text-center bold"><?= Html::a(count($clientesList), 'clientes', ['class' => 'text-decoration-none text-dark']) ?></h2>
+                        <h2 class="text-center bold my-4"><?= Html::a(count($clientesList), 'clientes', ['class' => 'text-decoration-none text-dark']) ?></h2>
                         <div class="card text-center">
-                            <?= Html::a('Novo Cliente', 'clientes/create', ['class' => 'btn btn-success']) ?>
+                            <?= Html::a('Clientes', './clientes', ['class' => 'btn btn-primary']) ?>
                         </div>
                     </div>
                 </div>
@@ -50,9 +53,15 @@ $this->title = 'Arteliê';
                     </div>
                     <div class="card-body">
                         <h6 class="card-title text-center">Quantidade de Encomendas Registradas</h6>
+<<<<<<< HEAD
                         <h2 class="text-center bold"><?= Html::a(count($encomendasList), 'encomendas', ['class' => 'text-decoration-none text-dark']) ?></h2>
                         <div class="card text-center">
                             <?= Html::a('Nova Encomenda', 'encomendas/create', ['class' => 'btn btn-success']) ?>
+=======
+                        <h2 class="text-center bold my-4"><?= Html::a(count($encomendasList), 'clientes', ['class' => 'text-decoration-none text-dark']) ?></h2>
+                        <div class="card text-center">
+                            <?= Html::a('Encomendas', './encomendas', ['class' => 'btn btn-primary']) ?>
+>>>>>>> 93596ff1f5508f95229e36d2de4534627a999b49
                         </div>
                     </div>
                 </div>

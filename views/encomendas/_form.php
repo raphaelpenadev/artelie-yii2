@@ -8,13 +8,21 @@ use yii\bootstrap5\ActiveForm;
 /** @var yii\web\View $this */
 /** @var app\models\Encomendas $model */
 /** @var yii\widgets\ActiveForm $form */
+
+$this->registerJs(<<<JS
+    $(document).ready(function(){ 
+         $("#nova_encomenda").on("pjax:end", function() {
+             $.pjax.reload({container:"#encomendas"});  //Reload GridView
+         });
+     });
+ JS);
 ?>
 
 <div class="encomendas-form">
-
+    <?php yii\widgets\Pjax::begin(['id' => 'nova_encomenda']) ?>
     <?php $form = ActiveForm::begin(); ?>
 
-    <div class="col-md-12 row">
+    <div class="row">
         <?= $form->field($model, 'idcliente')->dropDownList(ArrayHelper::map(Clientes::find()
             ->all(), 'idcliente', 'nome'), [
             'prompt' => 'Informe o cliente',
@@ -37,8 +45,11 @@ use yii\bootstrap5\ActiveForm;
             ]) ?>
             <?= $form->field($model, 'valor')->hiddenInput()->label(false) ?>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-3">
             <?= $form->field($model, 'status')->dropDownList(['P' => 'Pendente', 'A' => 'Aprovado', 'F' => 'Finalizado',], ['prompt' => 'Selecione o status da encomenda']) ?>
+        </div>
+        <div class="col-md-3">
+            <?= $form->field($model, 'dt_entrega')->input('date') ?>
         </div>
     </div>
 
@@ -50,11 +61,12 @@ use yii\bootstrap5\ActiveForm;
 </div>
 <!-- FIM EDITANDO -->
 
-<div class="form-group my-2">
+<div class="form-group mt-2">
     <?= Html::submitButton('Salvar', ['class' => 'btn btn-success']) ?>
 </div>
 
 <?php ActiveForm::end(); ?>
+<?php yii\widgets\Pjax::end() ?>
 
 </div>
 
