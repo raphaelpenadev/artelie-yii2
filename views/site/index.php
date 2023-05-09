@@ -2,8 +2,7 @@
 
 use yii\helpers\Html;
 use app\assets\AppAsset;
-
-AppAsset::register($this);
+use yii\bootstrap5\Modal;
 
 /** @var yii\web\View $this */
 
@@ -12,7 +11,7 @@ $this->title = 'Arteliê';
 <div class="site-index">
 
     <div class="jumbotron text-center bg-transparent my-5">
-        <h1 class="display-4"><?= Html::img('@web/assets/logo.png') ?></h1>
+        <h1 class="display-4"><?= Html::img('@web/assets/imgs/logoArt.png', ['width' => '500px', 'height' => '200px']) ?></h1>
     </div>
 
     <div class="body-content">
@@ -25,9 +24,16 @@ $this->title = 'Arteliê';
                     </div>
                     <div class="card-body">
                         <h6 class="card-title text-center">Quantidade de Produtos Registrados</h6>
-                        <h2 class="text-center bold my-4"><?= Html::a(count($produtosList), 'clientes', ['class' => 'text-decoration-none text-dark']) ?></h2>
+                        <h2 class="text-center bold my-4"><?= Html::a(count($produtosList), '../web/produtos', ['class' => 'text-decoration-none text-dark']) ?></h2>
                         <div class="card text-center">
-                            <?= Html::a('Produtos', './produtos', ['class' => 'btn btn-primary']) ?>
+                            <?php Modal::begin([
+                                'title' => '<h4>Novo produto</h4>',
+                                'toggleButton' => ['label' => 'Novo Produto', 'class' => 'btn btn-success'],
+                            ]);
+
+                            echo $this->render('_form-produtos', ['produtosModel' => $produtosModel]);
+
+                            Modal::end(); ?>
                         </div>
                     </div>
                 </div>
@@ -39,9 +45,16 @@ $this->title = 'Arteliê';
                     </div>
                     <div class="card-body">
                         <h6 class="card-title text-center">Quantidade de Clientes Registrados</h6>
-                        <h2 class="text-center bold my-4"><?= Html::a(count($clientesList), 'clientes', ['class' => 'text-decoration-none text-dark']) ?></h2>
+                        <h2 class="text-center bold my-4"><?= Html::a(count($clientesList), '../web/clientes', ['class' => 'text-decoration-none text-dark']) ?></h2>
                         <div class="card text-center">
-                            <?= Html::a('Clientes', './clientes', ['class' => 'btn btn-primary']) ?>
+                            <?php Modal::begin([
+                                'title' => '<h4>Novo Cliente</h4>',
+                                'toggleButton' => ['label' => 'Novo Cliente', 'class' => 'btn btn-success'],
+                            ]);
+
+                            echo $this->render('_form-clientes', ['clientesModel' => $clientesModel]);
+
+                            Modal::end(); ?>
                         </div>
                     </div>
                 </div>
@@ -53,15 +66,16 @@ $this->title = 'Arteliê';
                     </div>
                     <div class="card-body">
                         <h6 class="card-title text-center">Quantidade de Encomendas Registradas</h6>
-<<<<<<< HEAD
-                        <h2 class="text-center bold"><?= Html::a(count($encomendasList), 'encomendas', ['class' => 'text-decoration-none text-dark']) ?></h2>
+                        <h2 class="text-center bold my-4"><?= Html::a(count($encomendasList), '../web/encomendas', ['class' => 'text-decoration-none text-dark']) ?></h2>
                         <div class="card text-center">
-                            <?= Html::a('Nova Encomenda', 'encomendas/create', ['class' => 'btn btn-success']) ?>
-=======
-                        <h2 class="text-center bold my-4"><?= Html::a(count($encomendasList), 'clientes', ['class' => 'text-decoration-none text-dark']) ?></h2>
-                        <div class="card text-center">
-                            <?= Html::a('Encomendas', './encomendas', ['class' => 'btn btn-primary']) ?>
->>>>>>> 93596ff1f5508f95229e36d2de4534627a999b49
+                            <?php Modal::begin([
+                                'title' => '<h4>Nova encomenda</h4>',
+                                'toggleButton' => ['label' => 'Nova Encomenda', 'class' => 'btn btn-success'],
+                            ]);
+
+                            echo $this->render('_form-encomendas', ['encomendasModel' => $encomendasModel]);
+
+                            Modal::end(); ?>
                         </div>
                     </div>
                 </div>

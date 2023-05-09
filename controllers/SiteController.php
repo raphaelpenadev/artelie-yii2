@@ -64,10 +64,13 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-
         $clientesList = Clientes::find()->all();
         $produtosList = Produtos::find()->all();
         $encomendasList = Encomendas::find()->all();
+
+        $clientesModel = new Clientes();
+        $produtosModel = new Produtos();
+        $encomendasModel = new Encomendas();
 
         $dataHoje = date('d/m/Y');
 
@@ -96,11 +99,52 @@ class SiteController extends Controller
             }
         }
 
+
+        if ($this->request->isPost) {
+            if ($produtosModel->load($this->request->post())) {
+                $produtosModel->save();
+            } else {
+                $produtosModel->loadDefaultValues();
+            }
+
+            if ($clientesModel->load($this->request->post())) {
+                $clientesModel->save();
+            } else {
+                $clientesModel->loadDefaultValues();
+            }
+
+            if ($encomendasModel->load($this->request->post())) {
+                $encomendasModel->save();
+            } else {
+                $encomendasModel->loadDefaultValues();
+            }
+
+            return $this->redirect(['/']);
+        }
+
+
+
         return $this->render('index', [
             'clientesList' => $clientesList,
             'produtosList' => $produtosList,
-            'encomendasList' => $encomendasList
+            'encomendasList' => $encomendasList,
+
+            'produtosModel' => $produtosModel,
+            'encomendasModel' => $encomendasModel,
+            'clientesModel' => $clientesModel
+
         ]);
+    }
+
+    public function actionAjax()
+    {
+        $data = Yii::$app->request->post('test');
+        if (isset($data)) {
+            $test = "Ajax Worked!";
+        } else {
+            $test = "Ajax failed";
+        }
+        return \yii\helpers\Json::encode($test);
     }
 
     /**
