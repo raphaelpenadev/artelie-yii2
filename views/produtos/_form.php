@@ -37,7 +37,7 @@ $this->registerJs(<<<JS
                                     'data-mask' => '#.##0,00',
                                     'data-mask-reverse' => 'true',
                                     'aria-describedby' => 'vlUnitarioAddon',
-                                    'value' => ($model->valor_unitario) ? $model->valor_unitario : 0
+                                    'value' => ($model->valor_unitario) ? $model->valor_unitario : ''
                                 ]) ?>
             <?= $form->field($model, 'valor_unitario')->hiddenInput()->label(false) ?></div>
         <div class="col-md-6"><?= $form->field($model, 'quantidade')->textInput() ?>

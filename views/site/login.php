@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?= $form->field($model, 'password')->passwordInput()->label('Senha') ?>
 
-        <?= $form->field($model, 'rememberMe')->checkbox() ?>
+        <?= $form->field($model, 'rememberMe')->checkbox()->label('Lembrar de mim') ?>
 
         <div class="form-group text-end">
             <div class="offset-lg-1 col-lg-11">

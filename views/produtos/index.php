@@ -53,7 +53,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function ($model) {
                     $valorTotal = $model->valor_unitario * $model->quantidade;
                     return 'R$ ' . number_format($valorTotal, 2, ',', '.');
-                }
+                },
+                'headerOptions' => ['class' => 'text-primary']
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
