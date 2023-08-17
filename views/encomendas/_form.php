@@ -23,7 +23,7 @@ $this->registerJs(<<<JS
     <?php $form = ActiveForm::begin(); ?>
 
     <div class="row">
-        <?= $form->field($model, 'idcliente')->dropDownList(ArrayHelper::map(Clientes::find()
+        <?= $form->field($encomendasModel, 'idcliente')->dropDownList(ArrayHelper::map(Clientes::find()
             ->all(), 'idcliente', 'nome'), [
             'prompt' => 'Informe o cliente',
         ])->label('Cliente') ?>
