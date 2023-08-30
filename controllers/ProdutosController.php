@@ -47,7 +47,7 @@ class ProdutosController extends Controller
         $model = new Produtos();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $model = new Produtos(); //reset model
+            $model = new Produtos();
         }
 
         return $this->render('index', [

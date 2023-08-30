@@ -29,7 +29,7 @@ use yii\widgets\ActiveForm;
                                     'data-mask' => '#.##0,00',
                                     'data-mask-reverse' => 'true',
                                     'aria-describedby' => 'vlUnitarioAddon',
-                                    'value' => ($produtosModel->valor_unitario) ? $produtosModel->valor_unitario : 0
+                                    'value' => ($produtosModel->valor_unitario) ? $produtosModel->valor_unitario : ''
                                 ]) ?>
             <?= $form->field($produtosModel, 'valor_unitario')->hiddenInput()->label(false) ?></div>
         <div class="col-md-6"><?= $form->field($produtosModel, 'quantidade')->textInput() ?>

@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = 'Atualizar';
     <div class="row mt-2">
         <div class="col-md-12 mb-2"><?= $form->field($model, 'tipo')->textInput(['maxlength' => true]) ?></div>
         <div class="col-md-6"><?= $form->field($model, 'vlUnitarioStr', [
-                                    'template' => 'Valor da Unidade<div class="input-group mb-3">
+                                    'template' => '<label class="form-label">Valor da Unidade</label><div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="vlUnitarioAddon">R$</span>
                     </div>
@@ -32,7 +32,8 @@ $this->params['breadcrumbs'][] = 'Atualizar';
                                     'data-mask' => '#.##0,00',
                                     'data-mask-reverse' => 'true',
                                     'aria-describedby' => 'vlUnitarioAddon',
-                                    'value' => ($model->valor_unitario) ? $model->valor_unitario : 0
+                                    'value' => ($model->valor_unitario) ? $model->valor_unitario : '',
+                                    'class' => 'form-control'
                                 ]) ?>
             <?= $form->field($model, 'valor_unitario')->hiddenInput()->label(false) ?></div>
         <div class="col-md-6"><?= $form->field($model, 'quantidade')->textInput() ?>

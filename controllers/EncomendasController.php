@@ -82,10 +82,6 @@ class EncomendasController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
-
-                var_dump(date('d', strtotime($model->dt_entrega)), date('d', strtotime($dataHoje)));
-                exit;
-
                 if ($model->save()) {
                     return $this->redirect(['view', 'id' => $model->idencomenda]);
                 }
